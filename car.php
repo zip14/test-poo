@@ -10,9 +10,9 @@ class Car extends Auto{
         $this->fuel = $fuel;
         $this->fuelConsumption = $fuelConsumption;
     }
-    
+
     //метод движение вперед
-   public function move($destination){
+    public function move($destination){
         if($this->tankIsEmpty){
             return 'Tank is empty';
         }
