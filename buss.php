@@ -1,27 +1,52 @@
 <?php 
 
-class Buss extends Auto{ 
+class Bus extends Auto{ 
 
-    private $passenger_in_bus = NULL;
-    private $total_passenger = NULL;
-    private $bus_is_overload = FALSE;
+    private $passengersInBus = NULL;   //текущее количество пассажиров
+    private $maxPassengers = NULL;    //максимальное количество пассажиров
+    private $busIsOverload = FALSE;   //перегрузка автобуса
 
-    public function __construct($total_passenger){
-		$this->total_passenger = $total_passenger;
+    public function __construct($maxPassengers){
+		$this->maxPassengers = $maxPassengers;
     }
 
-    public function stop($passenger){
-        if($this->bus_is_overload){
+    //метод остановки автобуса
+    public function stop($passengers = NULL){
+        if(empty($passengers)){
+            return 'Simple stop ';
+        }
+        
+        if($this->busIsOverload){
             return 'Bus is overload';
         }
 
-        if(($this->passenger_in_bus + $passenger) <= $this->total_passenger){
-            $this->passenger_in_bus =  $this->passenger_in_bus + $passenger;
-            return 'Pasager in bus: ' . $this->passenger_in_bus;
+        $loadThePasager = $this->openTheDoor();
+        $loadThePasager .= '<br>' . $this->loadThePassegers($passengers); 
+        $loadThePasager .= '<br>' . $this->closeTheDoor();
+        
+        return $loadThePasager;
+    }
+
+    //метод открытия дверей
+    public function openTheDoor(){
+        return 'Open the door';
+    }
+
+     //метод закрытия дверей
+    public function closeTheDoor(){
+        return 'Close the door';
+    }
+
+    //метод загрузки пассажиров
+    public function loadThePassegers($passengers){
+        if(($this->passengersInBus + $passengers) <= $this->maxPassengers){
+            $this->passengersInBus =  $this->passengersInBus + $passengers;
+            return 'Passagers in bus: ' . $this->passengerInBus;
         }
         
-        $pasager_left = $this->total_passenger - ($this->passenger_in_bus + $passenger);
-        $this->bus_is_overload = true;
-        return 'Bus is overload pasager on passengers left(' . $pasager_left . ')';
+        $passengersLeft = $this->maxPassengers - ($this->passengersInBus + $passengers);
+        $this->busIsOverload = TRUE;
+        
+        return 'Bus is overload pasager on passengers left(' . $passengersLeft . ')';
     }
 }

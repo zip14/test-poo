@@ -78,7 +78,7 @@
 ?>
     <h1>Bus</h1>
 <?php
-    $buss = new Buss(30);
+    $buss = new Bus(30);
 
     echo($buss->move(2));
     echo('<br>');
@@ -147,5 +147,8 @@
     echo('<br>');
 
     echo($buss->move(10));
+    echo('<br>');
+
+    echo($buss->stop());
     echo('<br>');
 ?>

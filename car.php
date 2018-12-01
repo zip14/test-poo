@@ -2,33 +2,32 @@
 
 class Car extends Auto{ 
     
-    private $fuel = NULL;
-    private $fuel_consumption = NULL;
-    private $km_to_move = NULL;
+    private $fuel = NULL;   //количество топлива
+    private $fuelConsumption = NULL;    //потребление топлива на 100 км
+    private $tankIsEmpty = FALSE;    //бак пустой
 
-    public function __construct($fuel, $fuel_consumption){
-    
+    public function __construct($fuel, $fuelConsumption){
         $this->fuel = $fuel;
-        $this->fuel_consumption = $fuel_consumption;
+        $this->fuelConsumption = $fuelConsumption;
     }
     
-   public function move($distination){
- 
-        if(empty($this->fuel)){
-            return 'fuil is ' . $this->fuel;
+    //метод движение вперед
+   public function move($destination){
+        if($this->tankIsEmpty){
+            return 'Tank is empty';
         }
 
-        $fuel_for_distantion = ($this->fuel_consumption * $distination) / 100;
+        //необходимое количество топлива для заданной дистанции
+        $fuelForDistantion = ($this->fuelConsumption * $destination) / 100; 
 
-        echo('<strong>' . $this->fuel . '<br>');
-        echo($fuel_for_distantion . '<br></strong>');
+        if($this->fuel > $fuelForDistantion){
+            $this->fuel = $this->fuel - $fuelForDistantion;
 
-        if($this->fuel > $fuel_for_distantion){
-            $this->fuel = $this->fuel - $fuel_for_distantion;
-
-            return 'move to' . $distination;
-        }else{
-            return 'Fuil is: ' . $this->fuel . 'but need: ' . $fuel_for_distantin ;
+            return 'Move to ' . $destination . ' <strong>Fuel in tank: </strong>' . $this->fuel . '<strong>Fuel needed for destination: </strong>' . $fuelForDistantion;
         }
+
+        $tankIsEmpty = TRUE;
+
+        return 'Fuil is: ' . $this->fuel . 'but need: ' . $fuelForDistantion ;
     }
 }
